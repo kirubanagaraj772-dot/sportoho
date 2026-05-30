@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SporToHo7 | Official Sports Jersey Store</title>
+  <style>
+    :root {
+      --primary: #001f54;
+      --primary-light: #003380;
+      --secondary: #febf00;
+      --white: #ffffff;
+      --gray-light: #f5f5f5;
+      --gray-dark: #333333;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Roboto, sans-serif;
+    }
+    body {
+      background: var(--white);
+      color: var(--gray-dark);
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    header {
+      background: var(--primary);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.15);
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 1px;
+      cursor: pointer;
+    }
+    .logo span {
+      color: var(--secondary);
+    }
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+    .nav-links a {
+      color: var(--white);
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .cart-badge {
+      background: var(--secondary);
+      color: var(--primary);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    /* Sections visibility for multipage SPA */
+    section.page {
+      display: none;
+      min-height: 60vh;
+    }
+    section.page.active {
+      display: block;
+    }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, var(--primary) 0%, #000000 100%);
+      color: var(--white);
+      padding: 80px 0;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 2.8rem;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin: 16px auto 32px;
+    }
+    .btn {
+      display: inline-block;
+      background: var(--secondary);
+      color: var(--primary);
+      padding: 10px 24px;
+      border-radius: 30px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      transition: 0.3s;
+      font-size: 0.95rem;
+      border: none;
+      cursor: pointer;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+    .btn-small {
+      padding: 8px 16px;
+      font-size: 0.85rem;
+    }
+    .btn-whatsapp {
+      background: #25d366;
+      color: #ffffff;
+    }
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--white);
+      color: var(--white);
+    }
+    .btn-outline:hover {
+      background: var(--white);
+      color: var(--primary);
+    }
+
+    /* Features */
+    .features {
+      padding: 70px 0;
+      background: var(--gray-light);
+    }
+    .features-title {
+      text-align: center;
+      margin-bottom: 40px;
+      color: var(--primary);
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 32px;
+    }
+    .feature-card {
+      background: var(--white);
+      padding: 24px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+    .feature-card h3 {
+      margin: 16px 0;
+      color: var(--primary);
+    }
+    .feature-card p {
+      font-size: 0.95rem;
+      color: #666;
+    }
+
+    /* Products (Shop) */
+    .products {
+      padding: 70px 0;
+      background: var(--white);
+    }
+    .products-title {
+      text-align: center;
+      margin-bottom: 40px;
+      color: var(--primary);
+    }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 28px;
+    }
+    .product-card {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: 0.3s;
+      background: var(--white);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    }
+    .product-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 10px 10px 0 0;
+    }
+    .product-info {
+      padding: 16px;
+    }
+    .product-info h3 {
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+      color: var(--primary);
+    }
+    .product-price {
+      font-weight: 600;
+      color: var(--secondary);
+      margin-bottom: 8px;
+    }
+    .product-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    /* Product Detail */
+    .product-detail {
+      padding: 60px 0;
+    }
+    .product-detail-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 32px;
+      align-items: flex-start;
+    }
+    .product-detail img {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .detail-title {
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+      color: var(--primary);
+    }
+    .detail-price {
+      font-size: 1.3rem;
+      color: var(--secondary);
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+    .detail-desc {
+      font-size: 0.95rem;
+      color: #555;
+      margin-bottom: 16px;
+    }
+    .detail-form label {
+      display: block;
+      font-size: 0.9rem;
+      margin: 8px 0 4px;
+    }
+    .detail-form input,
+    .detail-form select {
+      width: 100%;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 0.9rem;
+    }
+    .detail-buttons {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* Cart */
+    .cart {
+      padding: 60px 0;
+      background: var(--gray-light);
+    }
+    .cart h2 {
+      text-align: center;
+      margin-bottom: 24px;
+      color: var(--primary);
+    }
+    .cart-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--white);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .cart-table th,
+    .cart-table td {
+      padding: 12px 10px;
+      font-size: 0.9rem;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+    .cart-table th {
+      background: var(--primary-light);
+      color: var(--white);
+    }
+    .cart-table tfoot td {
+      font-weight: 700;
+    }
+    .cart-empty {
+      text-align: center;
+      padding: 32px 0;
+      color: #777;
+    }
+    .cart-actions {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    /* CTA */
+    .cta {
+      background: var(--primary);
+      color: var(--white);
+      padding: 60px 0;
+      text-align: center;
+    }
+    .cta h2 {
+      font-size: 2.2rem;
+      margin-bottom: 16px;
+    }
+    .cta p {
+      max-width: 600px;
+      margin: 0 auto 24px;
+      font-size: 1.1rem;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--gray-dark);
+      color: var(--white);
+      padding: 40px 0 20px;
+    }
+    .footer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .footer-col {
+      flex: 1 1 220px;
+    }
+    .footer-col h3 {
+      margin-bottom: 16px;
+      font-size: 1.2rem;
+      color: var(--secondary);
+    }
+    .footer-col p,
+    .footer-col a {
+      font-size: 0.95rem;
+      color: #ccc;
+      margin-bottom: 10px;
+      display: block;
+    }
+    .footer-bottom {
+      margin-top: 20px;
+      text-align: center;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.9rem;
+      color: #999;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .product-detail-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      .nav-links {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo" data-page="home">Spor<span>ToHo</span>7</div>
+        <div class="nav-links">
+          <a data-page="home">Home</a>
+          <a data-page="shop">Shop</a>
+          <a data-page="cart">Cart <span class="cart-badge" id="cart-count">0</span></a>
+          <a href="#contact">Contact</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HOME PAGE -->
+  <section id="home" class="page active">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <h1>Official Sports Jerseys Online</h1>
+        <p>Premium cricket, football & sports jerseys with custom names and numbers. Fast delivery across India.</p>
+        <button class="btn" data-page="shop">View Collection</button>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+      <div class="container">
+        <h2 class="features-title">Why Choose Us</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <h3>Authentic Quality</h3>
+            <p>High‑grade fabrics and breathable mesh for comfortable match‑day wear.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Custom Printing</h3>
+            <p>Add your name and number with premium heat‑transfer printing.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Fast Delivery</h3>
+            <p>Quick dispatch and pan‑India shipping on all orders.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Best Value</h3>
+            <p>Competitive pricing without compromising on quality or fit.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+      <div class="container">
+        <h2>Ready to Wear Your Dream Jersey?</h2>
+        <p>DM us on Instagram @sportoho7ic.in for custom orders, bulk deals, and fast support.</p>
+        <a href="https://instagram.com/sportoho7ic.in" class="btn btn-outline" target="_blank">Contact via Instagram</a>
+      </div>
+    </section>
+  </section>
+
+  <!-- SHOP PAGE -->
+  <section id="shop" class="page">
+    <section class="products">
+      <div class="container">
+        <h2 class="products-title">Our Jersey Collection</h2>
+        <div class="products-grid">
+          <!-- Product 1 -->
+          <div class="product-card" data-id="rcb" data-name="RCB Jersey" data-price="299" data-img="assets\img\rcb-jersey.avif">
+            <img src="assets\img\rcb-jersey.avif" alt="RCB Jersey" class="product-img" />
+            <div class="product-info">
+              <h3>RCB Jersey</h3>
+              <div class="product-price">From ₹299</div>
+              <div class="product-actions">
+                <button class="btn btn-small" onclick="viewProduct('rcb')">View</button>
+                <button class="btn btn-small" onclick="addToCart('rcb')">Add to Cart</button>
+                <button class="btn btn-small btn-whatsapp" onclick="buyNowWhatsApp('rcb')">Buy on WhatsApp</button>
+              </div>
+            </div>
+          </div>
+          <!-- Product 2 -->
+          <div class="product-card" data-id="football" data-name="Football Club Jersey" data-price="349" data-img="c:\Users\ELCOT\internship\asset\Possible kit in 2022 World Cup.jpg">
+            <img src="c:\Users\ELCOT\internship\asset\Possible kit in 2022 World Cup.jpg" alt="Football Club Jersey" class="product-img" />
+            <div class="product-info">
+              <h3>Football Club Jersey</h3>
+              <div class="product-price">From ₹349</div>
+              <div class="product-actions">
+                <button class="btn btn-small" onclick="viewProduct('football')">View</button>
+                <button class="btn btn-small" onclick="addToCart('football')">Add to Cart</button>
+                <button class="btn btn-small btn-whatsapp" onclick="buyNowWhatsApp('football')">Buy on WhatsApp</button>
+              </div>
+            </div>
+          </div>
+          <!-- Product 3 -->
+          <div class="product-card" data-id="cricket" data-name="Cricket Jersey" data-price="399" data-img="c:\Users\ELCOT\internship\asset\indian jersey.jpg">
+            <img src="c:\Users\ELCOT\internship\asset\indian jersey.jpg" alt="Cricket Jersey" class="product-img" />
+            <div class="product-info">
+              <h3>Cricket Jersey</h3>
+              <div class="product-price">From ₹399</div>
+              <div class="product-actions">
+                <button class="btn btn-small" onclick="viewProduct('cricket')">View</button>
+                <button class="btn btn-small" onclick="addToCart('cricket')">Add to Cart</button>
+                <button class="btn btn-small btn-whatsapp" onclick="buyNowWhatsApp('cricket')">Buy on WhatsApp</button>
+              </div>
+            </div>
+          </div>
+          <!-- Product 4 -->
+          <div class="product-card" data-id="csk" data-name="CSK Jersey" data-price="299" data-img="c:\Users\ELCOT\internship\asset\Csk New Cricket Team Jersey.jpg">
+            <img src="c:\Users\ELCOT\internship\asset\Csk New Cricket Team Jersey.jpg" alt="CSK Jersey" class="product-img" />
+            <div class="product-info">
+              <h3>CSK Jersey</h3>
+              <div class="product-price">From ₹299</div>
+              <div class="product-actions">
+                <button class="btn btn-small" onclick="viewProduct('csk')">View</button>
+                <button class="btn btn-small" onclick="addToCart('csk')">Add to Cart</button>
+                <button class="btn btn-small btn-whatsapp" onclick="buyNowWhatsApp('csk')">Buy on WhatsApp</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <!-- PRODUCT DETAIL PAGE -->
+  <section id="product-detail" class="page">
+    <div class="product-detail">
+      <div class="container">
+        <button class="btn btn-small" data-page="shop">&larr; Back to Shop</button>
+        <div class="product-detail-layout" style="margin-top: 20px;">
+          <div>
+            <img id="detail-img" src="" alt="Jersey Image" />
+          </div>
+          <div>
+            <h2 id="detail-name" class="detail-title">Jersey Name</h2>
+            <div id="detail-price" class="detail-price">₹0</div>
+            <p class="detail-desc">Premium quality jersey with breathable fabric and comfortable fit for match days and fan wear.</p>
+            <form class="detail-form" onsubmit="event.preventDefault();">
+              <label for="detail-size">Size</label>
+              <select id="detail-size">
+                <option value="S">S</option>
+                <option value="M" selected>M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+              </select>
+
+              <label for="detail-name-input">Custom Name (optional)</label>
+              <input type="text" id="detail-name-input" placeholder="Enter your name" />
+
+              <label for="detail-number-input">Custom Number (optional)</label>
+              <input type="number" id="detail-number-input" placeholder="Enter your number" />
+
+              <label for="detail-qty">Quantity</label>
+              <input type="number" id="detail-qty" min="1" value="1" />
+            </form>
+            <div class="detail-buttons">
+              <button class="btn" id="detail-add-cart-btn">Add to Cart</button>
+              <button class="btn btn-whatsapp" id="detail-whatsapp-btn">Buy on WhatsApp</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CART PAGE -->
+  <section id="cart" class="page">
+    <div class="cart">
+      <div class="container">
+        <h2>Your Cart</h2>
+        <div id="cart-content"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="contact">
+    <div class="container">
+      <div class="footer">
+        <div class="footer-col">
+          <h3>SporToHo7</h3>
+          <p>Your trusted sports jersey brand for football, cricket, and more.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Shop</h3>
+          <a data-page="shop">Jersey Collection</a>
+          <a data-page="shop">Custom Jerseys</a>
+        </div>
+        <div class="footer-col">
+          <h3>Contact</h3>
+          <a href="https://instagram.com/sportoho7ic.in" target="_blank">Instagram @sportoho7ic.in</a>
+          <a href="mailto:info@sporotoho7.com">info@sporotoho7.com</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2026 SporToHo7. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // --------- CONFIG ---------
+    const WHATSAPP_NUMBER = "916369328087"; // 91 + 6369328087 (no + or spaces) [web:13][web:19][web:16]
+
+    // product data
+    const PRODUCTS = {
+      rcb: {
+        id: "rcb",
+        name: "RCB Jersey",
+        price: 299,
+        img: "c:\\Users\\ELCOT\\internship\\asset\\rcb.jpg"
+      },
+      football: {
+        id: "football",
+        name: "Football Club Jersey",
+        price: 349,
+        img: "c:\\Users\\ELCOT\\internship\\asset\\Possible kit in 2022 World Cup.jpg"
+      },
+      cricket: {
+        id: "cricket",
+        name: "Cricket Jersey",
+        price: 399,
+        img: "c:\\Users\\ELCOT\\internship\\asset\\indian jersey.jpg"
+      },
+      csk: {
+        id: "csk",
+        name: "CSK Jersey",
+        price: 299,
+        img: "c:\\Users\\ELCOT\\internship\\asset\\Csk New Cricket Team Jersey.jpg"
+      },
+    }
+
+    // --------- SIMPLE SPA NAVIGATION ---------
+    function showPage(pageId) {
+      document.querySelectorAll("section.page").forEach(sec => {
+        sec.classList.remove("active");
+      });
+      const page = document.getElementById(pageId);
+      if (page) {
+        page.classList.add("active");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
+
+    document.addEventListener("click", function (e) {
+      const page = e.target.getAttribute("data-page");
+      if (page) {
+        showPage(page);
+      }
+    });
+
+    // --------- CART (LOCALSTORAGE) ---------
+    function getCart() {
+      const stored = localStorage.getItem("sporto_cart");
+      return stored ? JSON.parse(stored) : {};
+    }
+
+    function saveCart(cart) {
+      localStorage.setItem("sporto_cart", JSON.stringify(cart));
+      updateCartCount();
+    }
+
+    function updateCartCount() {
+      const cart = getCart();
+      let count = 0;
+      Object.values(cart).forEach(item => {
+        count += item.qty;
+      });
+      document.getElementById("cart-count").textContent = count;
+    }
+
+    function addToCart(id, options = {}) {
+      const product = PRODUCTS[id];
+      if (!product) return;
+
+      const cart = getCart();
+      const key = id + "|" + (options.size || "M") + "|" + (options.name || "") + "|" + (options.number || "");
+
+      if (!cart[key]) {
+        cart[key] = {
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          size: options.size || "M",
+          customName: options.name || "",
+          customNumber: options.number || "",
+          qty: options.qty || 1
+        };
+      } else {
+        cart[key].qty += options.qty || 1;
+      }
+
+      saveCart(cart);
+      alert("Added to cart");
+    }
+
+    function removeFromCart(key) {
+      const cart = getCart();
+      delete cart[key];
+      saveCart(cart);
+      renderCart();
+    }
+
+    function changeQty(key, delta) {
+      const cart = getCart();
+      if (!cart[key]) return;
+      cart[key].qty += delta;
+      if (cart[key].qty <= 0) {
+        delete cart[key];
+      }
+      saveCart(cart);
+      renderCart();
+    }
+
+    function renderCart() {
+      const cart = getCart();
+      const container = document.getElementById("cart-content");
+      const keys = Object.keys(cart);
+
+      if (keys.length === 0) {
+        container.innerHTML = '<div class="cart-empty">Your cart is empty.</div>';
+        return;
+      }
+
+      let subtotal = 0;
+      let rows = keys.map(key => {
+        const item = cart[key];
+        const lineTotal = item.price * item.qty;
+        subtotal += lineTotal;
+        return `
+          <tr>
+            <td>${item.name}</td>
+            <td>${item.size}</td>
+            <td>${item.customName || "-"}</td>
+            <td>${item.customNumber || "-"}</td>
+            <td>₹${item.price}</td>
+            <td>
+              <button class="btn btn-small" onclick="changeQty('${key}', -1)">-</button>
+              ${item.qty}
+              <button class="btn btn-small" onclick="changeQty('${key}', 1)">+</button>
+            </td>
+            <td>₹${lineTotal}</td>
+            <td><button class="btn btn-small" onclick="removeFromCart('${key}')">X</button></td>
+          </tr>
+        `;
+      }).join("");
+
+      const total = subtotal;
+
+      container.innerHTML = `
+        <table class="cart-table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Size</th>
+              <th>Name</th>
+              <th>Number</th>
+              <th>Price</th>
+              <th>Qty</th>
+              <th>Total</th>
+              <th>Remove</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="6">Subtotal</td>
+              <td colspan="2">₹${total}</td>
+            </tr>
+          </tfoot>
+        </table>
+        <div class="cart-actions">
+          <button class="btn btn-whatsapp" onclick="checkoutWhatsApp()">Checkout via WhatsApp</button>
+        </div>
+      `;
+    }
+
+    // --------- WHATSAPP HELPERS ---------
+    function buildWhatsAppLink(message) {
+      const encoded = encodeURIComponent(message);
+      return `https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`;
+    }
+
+    function buyNowWhatsApp(id) {
+      const product = PRODUCTS[id];
+      if (!product) return;
+      const message = `Hi SporToHo7,%0A%0AI want to buy:%0A- Product: ${product.name}%0A- Price: ₹${product.price}%0A- Size: (S/M/L/XL)%0A- Custom Name:%0A- Custom Number:%0A%0APlease confirm availability.`;
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, "_blank");
+    }
+
+    function checkoutWhatsApp() {
+      const cart = getCart();
+      const keys = Object.keys(cart);
+      if (keys.length === 0) {
+        alert("Your cart is empty");
+        return;
+      }
+      let lines = ["Hi SporToHo7,", "", "I want to place this order:"];
+      let total = 0;
+      keys.forEach((key, index) => {
+        const item = cart[key];
+        const lineTotal = item.price * item.qty;
+        total += lineTotal;
+        lines.push(
+          `${index + 1}. ${item.name} | Size: ${item.size} | Name: ${item.customName || "-"} | Number: ${item.customNumber || "-"} | Qty: ${item.qty} | Total: ₹${lineTotal}`
+        );
+      });
+      lines.push("", `Cart total: ₹${total}`, "", "Please confirm availability and payment options.");
+      const message = lines.join("\n");
+      const url = buildWhatsAppLink(message);
+      window.open(url, "_blank");
+    }
+
+    // --------- PRODUCT DETAIL PAGE LOGIC ---------
+    let currentDetailId = null;
+
+    function viewProduct(id) {
+      const product = PRODUCTS[id];
+      if (!product) return;
+      currentDetailId = id;
+
+      document.getElementById("detail-img").src = product.img;
+      document.getElementById("detail-name").textContent = product.name;
+      document.getElementById("detail-price").textContent = "₹" + product.price;
+
+      document.getElementById("detail-size").value = "M";
+      document.getElementById("detail-name-input").value = "";
+      document.getElementById("detail-number-input").value = "";
+      document.getElementById("detail-qty").value = "1";
+
+      showPage("product-detail");
+    }
+
+    document.getElementById("detail-add-cart-btn").addEventListener("click", function () {
+      if (!currentDetailId) return;
+      const size = document.getElementById("detail-size").value;
+      const name = document.getElementById("detail-name-input").value.trim();
+      const number = document.getElementById("detail-number-input").value.trim();
+      const qty = parseInt(document.getElementById("detail-qty").value || "1", 10);
+      addToCart(currentDetailId, { size, name, number, qty });
+    });
+
+    document.getElementById("detail-whatsapp-btn").addEventListener("click", function () {
+      if (!currentDetailId) return;
+      const product = PRODUCTS[currentDetailId];
+      const size = document.getElementById("detail-size").value;
+      const name = document.getElementById("detail-name-input").value.trim();
+      const number = document.getElementById("detail-number-input").value.trim();
+      const qty = parseInt(document.getElementById("detail-qty").value || "1", 10);
+
+      let message = `Hi SporToHo7,%0A%0AI want to buy:%0A- Product: ${product.name}%0A- Price: ₹${product.price}%0A- Size: ${size}%0A- Quantity: ${qty}%0A- Custom Name: ${name || "-"}%0A- Custom Number: ${number || "-"}%0A%0APlease confirm availability.`;
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, "_blank");
+    });
+
+    // --------- INIT ---------
+    document.addEventListener("DOMContentLoaded", function () {
+      updateCartCount();
+      if (document.getElementById("cart")) {
+        renderCart();
+      }
+    });
+
+    // Re-render cart when Cart page is opened
+    document.addEventListener("click", function (e) {
+      const page = e.target.getAttribute("data-page");
+      if (page === "cart") {
+        renderCart();
+      }
+    });
+  </script>
+</body>
+</html>
