@@ -308,6 +308,9 @@
       text-align: center;
       padding: 32px 0;
       color: #777;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
     .cart-actions {
       margin-top: 16px;
@@ -315,6 +318,20 @@
       flex-wrap: wrap;
       gap: 10px;
       justify-content: flex-end;
+    }
+
+    /* Address form */
+    #address-form input {
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      padding: 8px;
+      font-size: 0.9rem;
+      width: 100%;
+    }
+    #address-form label {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 0.9rem;
     }
 
     /* CTA */
@@ -461,23 +478,23 @@
         <h2 class="products-title">Our Jersey Collection</h2>
         <div class="products-grid">
           <!-- Product 1 -->
-          <div class="product-card" data-id="rcb" data-name="RCB Jersey" data-price="299" data-img="assets\img\rcb-jersey.avif">
-            <img src="assets\img\rcb-jersey.avif" alt="RCB Jersey" class="product-img" />
+          <div class="product-card" data-id="mi" data-name="MI Jersey" data-price="299" data-img="assets/img/rcb-jersey.avif">
+            <img src="assets/mi.jpg" alt="RCB Jersey" class="product-img" />
             <div class="product-info">
-              <h3>RCB Jersey</h3>
+              <h3>MI Jersey</h3>
               <div class="product-price">From ₹299</div>
               <div class="product-actions">
-                <button class="btn btn-small" onclick="viewProduct('rcb')">View</button>
-                <button class="btn btn-small" onclick="addToCart('rcb')">Add to Cart</button>
-                <button class="btn btn-small btn-whatsapp" onclick="buyNowWhatsApp('rcb')">Buy on WhatsApp</button>
+                <button class="btn btn-small" onclick="viewProduct('mi')">View</button>
+                <button class="btn btn-small" onclick="addToCart('mi')">Add to Cart</button>
+                <button class="btn btn-small btn-whatsapp" onclick="buyNowWhatsApp('mi')">Buy on WhatsApp</button>
               </div>
             </div>
           </div>
           <!-- Product 2 -->
-          <div class="product-card" data-id="football" data-name="Football Club Jersey" data-price="349" data-img="c:\Users\ELCOT\internship\asset\Possible kit in 2022 World Cup.jpg">
-            <img src="c:\Users\ELCOT\internship\asset\Possible kit in 2022 World Cup.jpg" alt="Football Club Jersey" class="product-img" />
+          <div class="product-card" data-id="football" data-name="Football Jersey" data-price="349" data-img="assets/img/football-jersey.jpg">
+            <img src="assets/Fifa26.jpg" alt="Football Jersey" class="product-img" />
             <div class="product-info">
-              <h3>Football Club Jersey</h3>
+              <h3>Football Jersey</h3>
               <div class="product-price">From ₹349</div>
               <div class="product-actions">
                 <button class="btn btn-small" onclick="viewProduct('football')">View</button>
@@ -487,8 +504,8 @@
             </div>
           </div>
           <!-- Product 3 -->
-          <div class="product-card" data-id="cricket" data-name="Cricket Jersey" data-price="399" data-img="c:\Users\ELCOT\internship\asset\indian jersey.jpg">
-            <img src="c:\Users\ELCOT\internship\asset\indian jersey.jpg" alt="Cricket Jersey" class="product-img" />
+          <div class="product-card" data-id="cricket" data-name="Cricket Jersey" data-price="399" data-img="assets/img/cricket-jersey.jpg">
+            <img src="assets/indian jersey.jpg" alt="Cricket Jersey" class="product-img" />
             <div class="product-info">
               <h3>Cricket Jersey</h3>
               <div class="product-price">From ₹399</div>
@@ -500,8 +517,8 @@
             </div>
           </div>
           <!-- Product 4 -->
-          <div class="product-card" data-id="csk" data-name="CSK Jersey" data-price="299" data-img="c:\Users\ELCOT\internship\asset\Csk New Cricket Team Jersey.jpg">
-            <img src="c:\Users\ELCOT\internship\asset\Csk New Cricket Team Jersey.jpg" alt="CSK Jersey" class="product-img" />
+          <div class="product-card" data-id="csk" data-name="CSK Jersey" data-price="299" data-img="assets/img/csk-jersey.jpg">
+            <img src="assets/Csk.jpg" alt="CSK Jersey" class="product-img" />
             <div class="product-info">
               <h3>CSK Jersey</h3>
               <div class="product-price">From ₹299</div>
@@ -564,6 +581,43 @@
       <div class="container">
         <h2>Your Cart</h2>
         <div id="cart-content"></div>
+
+        <!-- Address / Shipping Details -->
+        <div style="margin-top: 20px; background:#ffffff; padding:16px; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
+          <h3 style="margin-bottom: 12px; color:#001f54;">Shipping Details</h3>
+          <form id="address-form" onsubmit="event.preventDefault();">
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:12px;">
+              <div>
+                <label for="addr-name">Full Name</label>
+                <input type="text" id="addr-name" required placeholder="Enter your full name">
+              </div>
+              <div>
+                <label for="addr-phone">Phone Number</label>
+                <input type="tel" id="addr-phone" required placeholder="10-digit mobile number" pattern="[0-9]{10}">
+              </div>
+              <div style="grid-column: 1 / -1;">
+                <label for="addr-line1">Address</label>
+                <input type="text" id="addr-line1" required placeholder="House / Street / Area">
+              </div>
+              <div>
+                <label for="addr-city">City</label>
+                <input type="text" id="addr-city" required placeholder="City">
+              </div>
+              <div>
+                <label for="addr-state">State</label>
+                <input type="text" id="addr-state" required placeholder="State">
+              </div>
+              <div>
+                <label for="addr-pincode">Pincode</label>
+                <input type="number" id="addr-pincode" required placeholder="Pincode">
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="cart-actions">
+          <button class="btn btn-whatsapp" onclick="checkoutWhatsApp()">Checkout via WhatsApp</button>
+        </div>
       </div>
     </div>
   </section>
@@ -595,33 +649,33 @@
 
   <script>
     // --------- CONFIG ---------
-    const WHATSAPP_NUMBER = "916369328087"; // 91 + 6369328087 (no + or spaces) [web:13][web:19][web:16]
+    const WHATSAPP_NUMBER = "916369328087";
 
     // product data
     const PRODUCTS = {
-      rcb: {
-        id: "rcb",
-        name: "RCB Jersey",
+      mi: {
+        id: "mi",
+        name: "MI Jersey",
         price: 299,
-        img: "c:\\Users\\ELCOT\\internship\\asset\\rcb.jpg"
+        img: "assets/mi.jpg"
       },
       football: {
         id: "football",
-        name: "Football Club Jersey",
+        name: "Football Jersey",
         price: 349,
-        img: "c:\\Users\\ELCOT\\internship\\asset\\Possible kit in 2022 World Cup.jpg"
+        img: "assets/Fifa26.jpg"
       },
       cricket: {
         id: "cricket",
         name: "Cricket Jersey",
         price: 399,
-        img: "c:\\Users\\ELCOT\\internship\\asset\\indian jersey.jpg"
+        img: "assets/indian jersey.jpg"
       },
       csk: {
         id: "csk",
         name: "CSK Jersey",
         price: 299,
-        img: "c:\\Users\\ELCOT\\internship\\asset\\Csk New Cricket Team Jersey.jpg"
+        img: "assets/Csk.jpg"
       },
     }
 
@@ -766,9 +820,6 @@
             </tr>
           </tfoot>
         </table>
-        <div class="cart-actions">
-          <button class="btn btn-whatsapp" onclick="checkoutWhatsApp()">Checkout via WhatsApp</button>
-        </div>
       `;
     }
 
@@ -792,6 +843,21 @@
         alert("Your cart is empty");
         return;
       }
+
+      // Read address fields
+      const name = document.getElementById("addr-name")?.value.trim() || "";
+      const phone = document.getElementById("addr-phone")?.value.trim() || "";
+      const line1 = document.getElementById("addr-line1")?.value.trim() || "";
+      const city = document.getElementById("addr-city")?.value.trim() || "";
+      const state = document.getElementById("addr-state")?.value.trim() || "";
+      const pincode = document.getElementById("addr-pincode")?.value.trim() || "";
+
+      // Simple validation for address
+      if (!name || !phone || !line1 || !city || !state || !pincode) {
+        alert("Please fill all shipping details before placing the order.");
+        return;
+      }
+
       let lines = ["Hi SporToHo7,", "", "I want to place this order:"];
       let total = 0;
       keys.forEach((key, index) => {
@@ -802,7 +868,21 @@
           `${index + 1}. ${item.name} | Size: ${item.size} | Name: ${item.customName || "-"} | Number: ${item.customNumber || "-"} | Qty: ${item.qty} | Total: ₹${lineTotal}`
         );
       });
-      lines.push("", `Cart total: ₹${total}`, "", "Please confirm availability and payment options.");
+      lines.push(
+        "",
+        `Cart total: ₹${total}`,
+        "",
+        "Shipping details:",
+        `Name: ${name}`,
+        `Phone: ${phone}`,
+        `Address: ${line1}`,
+        `City: ${city}`,
+        `State: ${state}`,
+        `Pincode: ${pincode}`,
+        "",
+        "Please confirm availability, delivery time and payment options."
+      );
+
       const message = lines.join("\n");
       const url = buildWhatsAppLink(message);
       window.open(url, "_blank");
